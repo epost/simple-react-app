@@ -1,5 +1,5 @@
 const Customers = new React.createClass({
-    getInitialState: function() {
+    getInitialState: function () {
         return {
             customers: [
                 {"id": 0, "name": "Daniel Gomez", "message": "UI nerd"},
@@ -8,11 +8,11 @@ const Customers = new React.createClass({
             ]
         }
     },
-    add: function(customer) {
+    add: function (customer) {
         const newCustomerId = customers => customers.length
             , newCustomer = R.merge({id: newCustomerId(this.state.customers)},customer)
             , newState = R.merge(this.state, {"customers": R.append(newCustomer, this.state.customers)});
-        
+
         this.setState(newState);
     },
     render: function() {
@@ -27,7 +27,7 @@ const Customers = new React.createClass({
 });
 
 const CustomerMessage = new React.createClass({
-    render: function() {
+    render: function () {
         return (
             <div className="customer-quote">
                 <div className="message">
@@ -43,24 +43,24 @@ const CustomerMessage = new React.createClass({
 });
 
 const NewCustomer = new React.createClass({
-    getInitialState: function() {
+    getInitialState: function () {
       return {name: "", message: ""};
     },
-    handleNameChange: function(event) {
+    handleNameChange: function (event) {
         this.setState({name: event.target.value});
     },
-    handleMessageChange: function(event) {
+    handleMessageChange: function (event) {
         this.setState({message: event.target.value});
     },
-    handleAdd: function() {
+    handleAdd: function () {
         var empty = !!(R.empty(this.state.name) || R.empty(this.state.message));
 
-        if(!empty) {
+        if (!empty) {
             this.props.add(this.state);
             this.setState(this.getInitialState());
         }
     },
-    render: function() {
+    render: function () {
         return (
             <div>
                 <div className="add">
