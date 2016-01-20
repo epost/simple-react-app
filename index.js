@@ -84,39 +84,6 @@ const NewCustomer = new React.createClass({
     }
 });
 
-const NameInput = new React.createClass({
-
-    getInitialState: function() {
-        return {value: ""}
-    },
-
-    handleChange: function(event) {
-        this.setState({value: event.target.value});
-    },
-
-    render: function() {
-        return (
-            <input type="text" placeholder="name" value={this.state.value} onChange={this.handleChange}/>
-        )
-    }
-});
-
-const MessageInput = new React.createClass({
-
-    getInitialState: function() {
-      return {value: ""}
-    },
-
-    handleChange: function(event) {
-        this.setState({value: event.target.value});
-    },
-
-    render: function() {
-        return (
-            <input type="text" placeholder="message" value={this.state.value} onChange={this.handleChange} />
-        )
-    }
-});
 
 
 
