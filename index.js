@@ -10,13 +10,11 @@ const Customers = new React.createClass({
     },
 
     add: function(customer) {
-
-        const nextCustomerId = customers => customers.length;
-        const newCustomer = R.merge({id: nextCustomerId(this.state.customers)},customer);
-        const newState = R.merge(this.state, {"customers": R.append(newCustomer, this.state.customers)});
+        const newCustomerId = customers => customers.length
+            , newCustomer = R.merge({id: newCustomerId(this.state.customers)},customer)
+            , newState = R.merge(this.state, {"customers": R.append(newCustomer, this.state.customers)});
 
         this.setState(newState);
-
     }
     ,
     render: function() {
