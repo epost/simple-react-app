@@ -8,15 +8,13 @@ const Customers = new React.createClass({
             ]
         }
     },
-
     add: function(customer) {
         const newCustomerId = customers => customers.length
             , newCustomer = R.merge({id: newCustomerId(this.state.customers)},customer)
             , newState = R.merge(this.state, {"customers": R.append(newCustomer, this.state.customers)});
-
+        
         this.setState(newState);
-    }
-    ,
+    },
     render: function() {
         const customers = this.state.customers;
         return (
@@ -48,15 +46,12 @@ const NewCustomer = new React.createClass({
     getInitialState: function() {
       return {name: "", message: ""};
     },
-
     handleNameChange: function(event) {
         this.setState({name: event.target.value});
-    }
-    ,
+    },
     handleMessageChange: function(event) {
         this.setState({message: event.target.value});
-    }
-    ,
+    },
     handleAdd: function() {
         var empty = !!(R.empty(this.state.name) || R.empty(this.state.message));
 
@@ -64,9 +59,7 @@ const NewCustomer = new React.createClass({
             this.props.add(this.state);
             this.setState(this.getInitialState());
         }
-    }
-
-    ,
+    },
     render: function() {
         return (
             <div>
@@ -81,9 +74,6 @@ const NewCustomer = new React.createClass({
         )
     }
 });
-
-
-
 
 ReactDOM.render(<Customers />, document.getElementById('customers-list'));
 
