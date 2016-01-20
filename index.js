@@ -15,9 +15,13 @@ const Customers = new React.createClass({
             return customers.length;
         }
 
+        const oldState = this.state;
         const customers = this.state.customers;
         const newCustomer = R.merge({id: nextCustomerId()},customer);
-        this.setState({customers: R.append(newCustomer, customers)});
+
+        const newState = R.merge(oldState, {customers: R.append(newCustomer, customers)});
+
+        this.setState(newState);
 
     }
     ,
@@ -62,7 +66,7 @@ const NewCustomer = new React.createClass({
     }
     ,
     handleAdd: function() {
-        var empty = !!(this.state.name == "" || this.state.message == "");
+        var empty = !!(R.empty(this.state.name) || R.empty(this.state.message));
 
         if(!empty) {
             this.props.add(this.state);
