@@ -9,15 +9,19 @@ const Customers = new React.createClass({
         }
     },
 
-    add: function(object) {
-        var state = this.state.customers;
-        object.id = state.length;
-        state.push(object);
-        this.setState(state);
+    add: function(customer) {
+
+        const customers = this.state.customers;
+
+        const newCustomer = R.merge({id: customers.length},customer);
+        const newState = R.append(newCustomer, customers);
+
+        this.setState({customers: newState});
+
     }
     ,
     render: function() {
-        var customers = this.state.customers;
+        const customers = this.state.customers;
         return (
             <div>
                 {customers.map(x => <CustomerMessage key={x.id} name={x.name} message={x.message} /> )}
