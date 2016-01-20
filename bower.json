@@ -1,0 +1,21 @@
+{
+  "name": "react-form",
+  "description": "Simple React App",
+  "main": "index.js",
+  "authors": [
+    "Emil van Veen"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/emilhaugberg/simple-react-app",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "~0.14.6"
+  }
+}
