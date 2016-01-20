@@ -15,7 +15,7 @@ const Customers = new React.createClass({
 
         this.setState(newState);
     },
-    render: function() {
+    render: function () {
         const customers = this.state.customers;
         return (
             <div>
