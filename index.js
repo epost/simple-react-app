@@ -11,12 +11,8 @@ const Customers = new React.createClass({
 
     add: function(object) {
         var state = this.state.customers;
-        var id = state.length;
-
-        object.id = id;
-
+        object.id = state.length;
         state.push(object);
-
         this.setState(state);
     }
     ,
@@ -61,10 +57,11 @@ const NewCustomer = new React.createClass({
     }
     ,
     handleAdd: function() {
-        var empty = this.state.name == "" || this.state.message == "" ? true : false;
+        var empty = !!(this.state.name == "" || this.state.message == "");
 
         if(!empty) {
             this.props.add(this.state);
+            this.setState(this.getInitialState());
         }
     }
 
@@ -74,8 +71,8 @@ const NewCustomer = new React.createClass({
             <div>
                 <div className="add">
                     <div className="user">
-                        <input type="text" placeholder="name" value={this.state.value} onChange={this.handleNameChange}/>
-                        <input type="text" placeholder="message" value={this.state.value} onChange={this.handleMessageChange} />
+                        <input type="text" placeholder="name" value={this.state.name} onChange={this.handleNameChange}/>
+                        <input type="text" placeholder="message" value={this.state.message} onChange={this.handleMessageChange} />
                         <button onClick={this.handleAdd}>add</button>
                     </div>
                 </div>
