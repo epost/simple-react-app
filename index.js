@@ -16,7 +16,7 @@ const Customers = new React.createClass({
         this.setState(newState);
     },
     delete: function (id) {
-        const customerId = parseInt(id)
+        const customerId = typeof id == "string" ? parseInt(id) : id
             , checkId = n => n.id !== customerId
             , newState = R.merge(this.state, {"customers" : R.filter(checkId, this.state.customers)});
 
