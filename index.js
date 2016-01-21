@@ -10,7 +10,7 @@ const Customers = new React.createClass({
     },
     add: function (customer) {
         const newCustomerId = customers => customers.length
-            , newCustomer = R.merge({id: newCustomerId(this.state.customers)},customer)
+            , newCustomer = R.merge({id: newCustomerId(this.state.customers)}, customer)
             , newState = R.merge(this.state, {"customers": R.append(newCustomer, this.state.customers)});
 
         this.setState(newState);
@@ -18,8 +18,7 @@ const Customers = new React.createClass({
     delete: function (id) {
         const customerId = parseInt(id)
             , checkId = n => n.id !== customerId
-            , filteredCustomers = R.filter(checkId, this.state.customers)
-            , newState = R.merge(this.state, {"customers" : filteredCustomers});
+            , newState = R.merge(this.state, {"customers" : R.filter(checkId, this.state.customers)});
 
         this.setState(newState);
     },
