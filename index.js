@@ -15,11 +15,19 @@ const Customers = new React.createClass({
 
         this.setState(newState);
     },
+    delete: function (id) {
+        const customerId = parseInt(id)
+            , checkId = n => n.id !== customerId
+            , filteredCustomers = R.filter(checkId, this.state.customers)
+            , newState = R.merge(this.state, {"customers" : filteredCustomers});
+
+        this.setState(newState);
+    },
     render: function () {
         const customers = this.state.customers;
         return (
             <div>
-                {customers.map(x => <CustomerMessage key={x.id} name={x.name} message={x.message} /> )}
+                {customers.map(x => <CustomerMessage delete={this.delete} id={x.id} key={x.id} name={x.name} message={x.message} /> )}
                 <NewCustomer add={this.add} />
             </div>
         )
@@ -27,6 +35,9 @@ const Customers = new React.createClass({
 });
 
 const CustomerMessage = new React.createClass({
+    handleClick: function (event) {
+        this.props.delete(event.target.id);
+    },
     render: function () {
         return (
             <div className="customer-quote">
@@ -37,6 +48,8 @@ const CustomerMessage = new React.createClass({
                 <div className="customer">
                     {this.props.name}
                 </div>
+
+                <button id={this.props.id} onClick={this.handleClick}>Delete</button>
             </div>
         )
     }
@@ -44,7 +57,7 @@ const CustomerMessage = new React.createClass({
 
 const NewCustomer = new React.createClass({
     getInitialState: function () {
-      return {name: "", message: ""};
+        return {name: "", message: ""};
     },
     handleNameChange: function (event) {
         this.setState({name: event.target.value});
