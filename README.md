@@ -1,3 +1,3 @@
 # simple-react-app
 
-Simple ReactJS application to add users to a particular model
+Simple ReactJS application to add and remove users to/from a particular model
