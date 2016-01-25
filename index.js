@@ -1,41 +1,62 @@
+
+// our global application state ~ much like the Elm "Model"
+var appState = {
+    customers: [
+        {"id": 0, "name": "Daniel Gomez", "message": "UI nerd"},
+        {"id": 1, "name": "Emil Haugberg van Veen", "message": "UI nerd"},
+        {"id": 2, "name": "Luca Verhees", "message": "FP nerd"}
+    ]
+};
+
+// target DOM element where React renders to
+const targetElement = document.getElementById('customers-list')
+
+function delayUntilNextTick ( f ) {
+    setTimeout(f, 30)
+}
+
+// update our UI..
+function updateUI () {
+    // ..but not right away, because React will break
+    delayUntilNextTick(() => { ReactDOM.render(<Customers customers={ appState.customers }/>, targetElement); })
+}
+
+// add a customer to our global state
+function addCustomer (customer) {
+
+    const newId = appState.customers.length;
+    const newCustomer = R.assoc('id', newId, customer);
+    const newCustomerState = R.append(newCustomer, appState.customers);
+
+    appState = R.merge(appState, { customers: newCustomerState });
+
+    updateUI();
+};
+
+function deleteCustomer (id) {
+
+    const customerId = parseInt(id);
+
+    appState = R.merge(appState, {customers: R.filter(c => c.id !== customerId, appState.customers)});
+
+    updateUI();
+};
+
 const Customers = new React.createClass({
-    getInitialState: function () {
-        return {
-            customers: [
-                {"id": 0, "name": "Daniel Gomez", "message": "UI nerd"},
-                {"id": 1, "name": "Emil Haugberg van Veen", "message": "UI nerd"},
-                {"id": 2, "name": "Luca Verhees", "message": "FP nerd"}
-            ]
-        }
-    },
-    add: function (customer) {
-        const newCustomerId = customers => customers.length
-            , newCustomer = R.merge({id: newCustomerId(this.state.customers)}, customer)
-            , newState = R.merge(this.state, {"customers": R.append(newCustomer, this.state.customers)});
-
-        this.setState(newState);
-    },
-    delete: function (id) {
-
-        const customerId = parseInt(id);
-        const newState = R.merge(this.state, {customers: R.filter(cust => cust.id !== customerId, this.state.customers)});
-
-        this.setState(newState);
-    },
     render: function () {
-        const customers = this.state.customers;
+        const mkMessage = x => <CustomerMessage id={x.id} key={x.id} name={x.name} message={x.message} />;
         return (
             <div>
-                {customers.map(x => <CustomerMessage delete={this.delete} id={x.id} key={x.id} name={x.name} message={x.message} /> )}
-                <NewCustomer add={this.add} />
+                { R.map( mkMessage, this.props.customers ) }
+                <NewCustomer />
             </div>
         )
     }
 });
 
 const CustomerMessage = new React.createClass({
-    handleClick: function (event) {
-        this.props.delete(event.target.id);
+    handleClick: function (id) {
+        deleteCustomer(id)
     },
     render: function () {
         return (
@@ -48,7 +69,7 @@ const CustomerMessage = new React.createClass({
                     {this.props.name}
                 </div>
 
-                <button id={this.props.id} onClick={this.handleClick}>Delete</button>
+                <button id={this.props.id} onClick={ this.handleClick(this.props.id) }>Delete</button>
             </div>
         )
     }
@@ -87,5 +108,5 @@ const NewCustomer = new React.createClass({
     }
 });
 
-ReactDOM.render(<Customers />, document.getElementById('customers-list'));
+updateUI()
 
