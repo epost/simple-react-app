@@ -55,7 +55,8 @@ const Customers = new React.createClass({
 });
 
 const CustomerMessage = new React.createClass({
-    handleClick: function (id) {
+    handleClick: function (event) {
+        var id = event.target.id;
         deleteCustomer(id)
     },
     render: function () {
@@ -69,7 +70,7 @@ const CustomerMessage = new React.createClass({
                     {this.props.name}
                 </div>
 
-                <button id={this.props.id} onClick={ this.handleClick(this.props.id) }>Delete</button>
+                <button id={this.props.id} onClick={ this.handleClick }>Delete</button>
             </div>
         )
     }
