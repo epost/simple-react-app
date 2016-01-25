@@ -90,7 +90,7 @@ const NewCustomer = new React.createClass({
         var empty = !!(R.empty(this.state.name) || R.empty(this.state.message));
 
         if (!empty) {
-            this.props.add(this.state);
+            addCustomer(this.state);
             this.setState(this.getInitialState());
         }
     },
